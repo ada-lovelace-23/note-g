@@ -2,12 +2,12 @@ AWSTemplateFormatVersion: "2010-09-09"
 Transform: "AWS::Serverless-2016-10-31"
 
 Resources:
-  uploadAudio:
+  audioHandler:
     Type: "AWS::Serverless::Function"
     Properties:
-      Handler: audioHandler.uploadAudio
+      Handler: audioHandler.audioHandler
       Runtime: nodejs18.x
-      CodeUri: ./handler
+      CodeUri: ./handlers
       # Environment:
       #   Variables:
       #     GREETINGS_TABLE: !Ref GreetingsTable
@@ -23,10 +23,9 @@ Resources:
   transpileAudio:
     Type: "AWS::Serverless::Function"
     Properties:
-      Handler: audioService.transpileAudio
+      Handler: transpileAudio.transpileAudio
       Runtime: nodejs18.x
       CodeUri: ./services
-
 Outputs:
   MyApi:
     Description: "API Gateway endpoint URL"
