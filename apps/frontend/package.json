@@ -8,7 +8,7 @@
     "gatsby"
   ],
   "scripts": {
-    "develop": "gatsby develop",
+    "dev": "gatsby develop",
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
@@ -18,9 +18,12 @@
   "dependencies": {
     "gatsby": "^5.9.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "ui": "workspace:*"
   },
   "devDependencies": {
-    "gatsby-plugin-pnpm-gatsby-5": "^1.2.11"
+    "eslint-plugin-flowtype": "^8.0.3",
+    "gatsby-plugin-pnpm-gatsby-5": "^1.2.11",
+    "styled-components": "^5.3.10"
   }
 }
