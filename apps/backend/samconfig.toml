@@ -1,0 +1,8 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "note-g"
+resolve_s3 = true
+s3_prefix = "note-g"
+region = "eu-west-1"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

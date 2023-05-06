@@ -1,0 +1,28 @@
+{
+  "name": "note-g",
+  "version": "0.1.0",
+  "description": "",
+  "main": "package.json",
+  "scripts": {
+    "build": "turbo run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": " <jpozivil@leadtech.com> (https://leadtech.com/)",
+  "license": "UNLICENSED",
+  "contributors": [
+    {
+      "name": "Pedro Salas",
+      "email": "be.pdro@gmail.com"
+    },
+    {
+      "name": "Jan Honza Pozivil",
+      "email": "crs1138@me.com",
+      "url": "https://crs138.me"
+    }
+  ],
+  "devDependencies": {
+    "turbo": "^1.9.3"
+  },
+  "packageManager": "pnpm@8.3.1"
+}
