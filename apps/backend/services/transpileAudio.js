@@ -1,5 +1,5 @@
 
-exports.transpileAudio = async (text) => {
+exports.transpileAudio = async (audioFileName) => {
 
     return {
         statusCode: 200,

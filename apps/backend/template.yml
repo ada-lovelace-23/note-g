@@ -5,6 +5,7 @@ Resources:
   audioHandler:
     Type: "AWS::Serverless::Function"
     Properties:
+      FunctionName: audioHandler
       Handler: audioHandler.audioHandler
       Runtime: nodejs18.x
       CodeUri: ./handlers
@@ -23,7 +24,15 @@ Resources:
   transpileAudio:
     Type: "AWS::Serverless::Function"
     Properties:
+      FunctionName: transpileAudio
       Handler: transpileAudio.transpileAudio
+      Runtime: nodejs18.x
+      CodeUri: ./services
+  readS3:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: readS3Object
+      Handler: readS3Object.readS3Object
       Runtime: nodejs18.x
       CodeUri: ./services
 Outputs:
