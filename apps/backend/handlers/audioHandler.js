@@ -7,7 +7,7 @@ exports.audioHandler = async (event) => {
     const client = new LambdaClient({ region: "eu-west-2" });
 
     const params = {
-        FunctionName: 'note-g-transpileAudio-9vLpQRrNnQ4D',
+        FunctionName: 'transpileAudio',
         InvocationType: 'RequestResponse',
         LogType: 'None',
         Payload: '{}',
