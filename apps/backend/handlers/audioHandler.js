@@ -4,7 +4,7 @@ exports.audioHandler = async (event) => {
     
     //readS3text
     const bucketParams = {
-        FunctionName: 'readS3Object',
+        FunctionName: 'readS3File',
         InvocationType: 'RequestResponse',
         LogType: 'None',
         Payload: '',

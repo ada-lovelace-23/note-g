@@ -15,6 +15,10 @@ Resources:
       Policies:
         - LambdaInvokePolicy:
             FunctionName: !Ref transpileAudio
+        - LambdaInvokePolicy:
+            FunctionName: !Ref readS3File
+        - LambdaInvokePolicy:
+            FunctionName: !Ref textTranslation
       Events:
         Api:
           Type: Api
@@ -28,13 +32,16 @@ Resources:
       Handler: transpileAudio.transpileAudio
       Runtime: nodejs18.x
       CodeUri: ./services
-  readS3Object:
+  readS3File:
     Type: "AWS::Serverless::Function"
     Properties:
-      FunctionName: readS3Object
-      Handler: readS3Object.readS3Object
+      FunctionName: readS3File
+      Handler: readS3File.readS3File
       Runtime: nodejs18.x
       CodeUri: ./services
+      Policies:
+        - S3ReadPolicy:
+            BucketName: ada-transcript-out
   textTranslation:
     Type: "AWS::Serverless::Function"
     Properties:
