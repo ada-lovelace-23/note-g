@@ -28,11 +28,18 @@ Resources:
       Handler: transpileAudio.transpileAudio
       Runtime: nodejs18.x
       CodeUri: ./services
-  readS3:
+  readS3Object:
     Type: "AWS::Serverless::Function"
     Properties:
       FunctionName: readS3Object
       Handler: readS3Object.readS3Object
+      Runtime: nodejs18.x
+      CodeUri: ./services
+  textTranslation:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: textTranslation
+      Handler: textTranslation.textTranslation
       Runtime: nodejs18.x
       CodeUri: ./services
 Outputs:

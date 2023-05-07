@@ -1,32 +1,31 @@
-const { LambdaClient, InvokeCommand } = require("@aws-sdk/client-lambda");
+const { lambdaInvoke } = require("./lambdaInvoke.js");
 
 exports.audioHandler = async (event) => {
-    console.log(event);
-
-    // a client can be shared by different commands.
-    const client = new LambdaClient({ region: "eu-west-2" });
-
-    const params = {
-        FunctionName: 'transpileAudio',
+    
+    //readS3text
+    const bucketParams = {
+        FunctionName: 'readS3Object',
         InvocationType: 'RequestResponse',
         LogType: 'None',
-        Payload: '{}',
-    };
+        Payload: '',
+    }
+    const responseToTranslate = await lambdaInvoke(bucketParams)
+    const textToTranslated = JSON.parse(Buffer.from(responseToTranslate.Payload).toString())
 
-    const command = new InvokeCommand(params);
+    //Text Translation
 
-    let data = null
-
-    try {
-        data = await client.send(command);
-    } catch (error) {
-        throw new Error('Failed to get response from lambda function')
+    const TranslationFunctionParams = {
+        FunctionName: 'textTranslation',
+        InvocationType: 'RequestResponse',
+        LogType: 'None',
+        Payload: '',
     }
 
-    const response = JSON.parse(Buffer.from(data.Payload).toString());
-
+    const TranslationResponde = await lambdaInvoke(TranslationFunctionParams)
+    const textTranslated = JSON.parse(Buffer.from(TranslationResponde.Payload).toString())
+    
     return {
         statusCode: 200,
-        body: JSON.stringify(response),
+        body: textToTranslated
     }
 }
