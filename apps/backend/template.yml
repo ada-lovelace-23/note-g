@@ -9,6 +9,7 @@ Resources:
       Handler: audioHandler.audioHandler
       Runtime: nodejs18.x
       CodeUri: ./handlers
+      Timeout: 10
       # Environment:
       #   Variables:
       #     GREETINGS_TABLE: !Ref GreetingsTable
