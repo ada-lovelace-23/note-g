@@ -10,7 +10,7 @@ exports.audioHandler = async (event) => {
         Payload: '',
     }
     const responseToTranslate = await lambdaInvoke(bucketParams)
-    const textToTranslated = JSON.parse(Buffer.from(responseToTranslate.Payload).toString())
+    const textToTranslated = Buffer.from(responseToTranslate.Payload).toString()
 
     //Text Translation
 
@@ -26,6 +26,6 @@ exports.audioHandler = async (event) => {
     
     return {
         statusCode: 200,
-        body: textToTranslated
+        body: JSON.stringify(textToTranslated)
     }
 }
