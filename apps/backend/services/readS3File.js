@@ -1,12 +1,12 @@
 const { S3Client,GetObjectCommand } = require("@aws-sdk/client-s3");
 const client = new S3Client({ region: "eu-west-2" })
 
-exports.readS3File = async (config) => {
+exports.readS3File = async (event) => {
 
     const command = new GetObjectCommand({
-        Bucket: "ada-transcript-out",
-        Key: "honza-576.json"
-    });
+            Bucket: event.bucket,
+            Key: event.key
+        });
 
     let data = null
     

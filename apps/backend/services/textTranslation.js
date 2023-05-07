@@ -1,10 +1,10 @@
 const { TranslateClient,TranslateTextCommand } = require("@aws-sdk/client-translate");
 const client = new TranslateClient({ region: "eu-west-2" })
 
-exports.textTranslation = async (textToTranslate) => {
+exports.textTranslation = async (event) => {
 
     const input = {
-        Text: "hello this is my fisrt Translation", // required
+        Text: event.text, // required
         SourceLanguageCode: "en", // required
         TargetLanguageCode: "es", // required
     };
