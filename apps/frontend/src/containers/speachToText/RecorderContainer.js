@@ -11,7 +11,7 @@ import { Buffer } from "buffer";
 import getUserMedia from "get-user-media-promise";
 
 
-const RecorderContainer = ({ handleTextToTranslate }) => {
+const RecorderContainer = ({ textToTranslatehandler }) => {
   const [recording, setRecording] = useState(false);
   const SAMPLE_RATE = 44100;
   let microphoneStream = undefined;
@@ -109,7 +109,7 @@ const RecorderContainer = ({ handleTextToTranslate }) => {
     return Buffer.from(buffer);
   };
 
-  const handleMicClick = async () => {
+  const micClickhandler = async () => {
     if(recording === true){
       console.log("recording")
       stopRecording();
@@ -124,13 +124,13 @@ const RecorderContainer = ({ handleTextToTranslate }) => {
   };
 
   const onTranscriptionDataReceived = (data) => {
-    handleTextToTranslate(data)
+    textToTranslatehandler(data)
   }
 
   
   return (
       <>
-        <Microphone handleMicClick={handleMicClick} />
+        <Microphone micClickhandler={micClickhandler} />
       </>
   );
 };

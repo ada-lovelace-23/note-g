@@ -8,7 +8,7 @@ const SpeachToTextContainer = () => {
   const [textTranslated, setTextTranslated] = useState("");
   const textTranscribe = useRef("");
   
-  const handlerTextToTranslate = (data) =>{
+  const textToTranslatehandler = (data) =>{
     textTranscribe.current = textTranscribe.current + " " + data
     updateTranscribeText(textTranscribe.current)
     console.log(textTranscribe.current, textToTranslate)
@@ -18,7 +18,7 @@ const SpeachToTextContainer = () => {
     setTextToTranslate(text)
   }
 
-  const handleTextTranslated = (data) => {
+  const textTranslatedHandler = (data) => {
     setTextTranslated(data)
   }
 
@@ -30,12 +30,12 @@ const SpeachToTextContainer = () => {
             onChange={(e) => updateTranscribeText(e.target.value)}
             />
           <RecorderContainer 
-            handleTextToTranslate={handlerTextToTranslate} 
+            textToTranslatehandler={textToTranslatehandler} 
             />
           <TranslationContainer 
             textToTranslate={textToTranslate} 
             languageTarget="es"
-            handleTextTranslated={handleTextTranslated} 
+            textTranslatedHandler={textTranslatedHandler} 
             />
       </>
   );

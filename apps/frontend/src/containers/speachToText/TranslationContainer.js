@@ -5,7 +5,7 @@ import { TranslateClient, TranslateTextCommand } from "@aws-sdk/client-translate
 import { ComprehendClient, DetectDominantLanguageCommand } from "@aws-sdk/client-comprehend";
 
 
-const TranslationContainer = ({ textToTranslate, handleTextTranslated, languageTarget }) => {
+const TranslationContainer = ({ textToTranslate, textTranslatedHandler, languageTarget }) => {
   
   const [textTranslated, setTextTranslated] = useState('');
 
@@ -43,7 +43,7 @@ const TranslationContainer = ({ textToTranslate, handleTextTranslated, languageT
       new TranslateTextCommand(translateParams)
     );
     setTextTranslated(data.TranslatedText)
-    handleTextTranslated(data.TranslatedText)
+    textTranslatedHandler(data.TranslatedText)
     return data.TranslatedText;
 
   }
