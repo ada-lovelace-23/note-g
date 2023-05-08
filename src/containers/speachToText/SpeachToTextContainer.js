@@ -24,11 +24,11 @@ const SpeachToTextContainer = () => {
 
 
   return (
-      <>
-          <textarea 
+      <div>
+          {/* <textarea 
             value={textToTranslate} 
             onChange={(e) => updateTranscribeText(e.target.value)}
-            />
+            /> */}
           <RecorderContainer 
             textToTranslatehandler={textToTranslatehandler} 
             />
@@ -37,7 +37,7 @@ const SpeachToTextContainer = () => {
             languageTarget="es"
             textTranslatedHandler={textTranslatedHandler} 
             />
-      </>
+      </div>
   );
 };
 

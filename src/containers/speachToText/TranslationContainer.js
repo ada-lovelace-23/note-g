@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-provider-cognito-identity";
 import { TranslateClient, TranslateTextCommand } from "@aws-sdk/client-translate";
 import { ComprehendClient, DetectDominantLanguageCommand } from "@aws-sdk/client-comprehend";
-
+import "./TranslationContainer.css"
 
 const TranslationContainer = ({ textToTranslate, textTranslatedHandler, languageTarget }) => {
   
   const [textTranslated, setTextTranslated] = useState('');
+  const translationSwitch = useRef("")
+
+  if(textToTranslate !== translationSwitch.current){
+    translationSwitch.current = textToTranslate
+  }
+
+  useEffect(() => {
+    if(textToTranslate != ""){
+      translateTextToLanguage(textToTranslate, languageTarget) 
+    }
+  },[translationSwitch.current]);
 
   const translateTextToLanguage = async (text, targetLanguage) => {
     const sourceLanguage = await detectLanguageOfText(text);
@@ -57,16 +68,13 @@ const TranslationContainer = ({ textToTranslate, textTranslatedHandler, language
       }),
     });
   }
-
-  const translateHandler = () => {
-    translateTextToLanguage(textToTranslate, languageTarget)
-  }
+  
   
   return (
-        <>
-          <button onClick={translateHandler}>Translate</button>
-          <textarea value={textTranslated} readOnly/>
-        </>
+        <div className="translationContainer">
+          {/* <button onClick={translateHandler}>Translate</button> */}
+          <textarea className="translationBox" value={textTranslated} readOnly/>
+        </div>
     );
   };
 
