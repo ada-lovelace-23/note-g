@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Microphone from 'ui/MicInput';
+import Microphone from './../../../packages/ui/MicInput';
 import {
   TranscribeStreamingClient,
   StartStreamTranscriptionCommand,

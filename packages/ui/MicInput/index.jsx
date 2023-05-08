@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mic, MicOff, MicNone } from '@material-ui/icons';
+// import { Mic, MicOff, MicNone } from '@material-ui/icons';
 
 const constraints = { audio: true, video: false };
 
@@ -51,7 +51,8 @@ const Microphone = ({ micClickhandler }) => {
                 // disabled={!stream}
                 style={micButtonStyle}>
                 {/* {!stream ? <MicDisabled /> : isRecording ? <MicStop /> : <MicRecord />} */}
-                <MicRecord />
+                {/* <MicRecord /> */}
+                test
             </button>
             {/* {blobUrl && <audio controls src={blobUrl}></audio>} */}
         </div>

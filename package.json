@@ -1,29 +1,39 @@
 {
-  "name": "note-g",
-  "version": "0.1.0",
-  "description": "",
-  "main": "package.json",
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo dev -- --https",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": " <jpozivil@leadtech.com> (https://leadtech.com/)",
-  "license": "UNLICENSED",
-  "contributors": [
-    {
-      "name": "Pedro Salas",
-      "email": "be.pdro@gmail.com"
-    },
-    {
-      "name": "Jan Honza Pozivil",
-      "email": "crs1138@me.com",
-      "url": "https://crs138.me"
-    }
+  "name": "gatsby-starter-minimal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A Gatsby starter with no plugins and a single welcome page.",
+  "author": "Laurie Barth",
+  "keywords": [
+    "gatsby"
   ],
-  "devDependencies": {
-    "turbo": "^1.9.3"
+  "scripts": {
+    "dev": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
   },
-  "packageManager": "pnpm@8.3.1"
+  "license": "0BSD",
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity": "^3.328.0",
+    "@aws-sdk/client-comprehend": "^3.328.0",
+    "@aws-sdk/client-transcribe-streaming": "^3.328.0",
+    "@aws-sdk/client-translate": "^3.328.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.328.0",
+    "add": "^2.0.6",
+    "buffer": "^6.0.3",
+    "gatsby": "^5.9.0",
+    "get-user-media-promise": "^1.1.4",
+    "microphone-stream": "^6.0.1",
+    "pnpm": "^8.4.0",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-flowtype": "^8.0.3",
+    "gatsby-plugin-pnpm-gatsby-5": "^1.2.11",
+    "styled-components": "^5.3.10"
+  }
 }
