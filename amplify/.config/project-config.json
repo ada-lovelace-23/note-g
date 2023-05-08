@@ -1,0 +1,17 @@
+{
+  "projectName": "noteg",
+  "version": "3.1",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react",
+    "config": {
+      "SourceDir": "./",
+      "DistributionDir": "apps/frontend/public",
+      "BuildCommand": "pnpm run build",
+      "StartCommand": "pnpm run dev"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
+}
