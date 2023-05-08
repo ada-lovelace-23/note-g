@@ -1,6 +1,4 @@
 import React from 'react';
-import useUserMedia from 'react-use-user-media';
-import useRecordMp3 from 'use-record-mp3';
 import { Mic, MicOff, MicNone } from '@material-ui/icons';
 
 const constraints = { audio: true, video: false };
@@ -40,19 +38,20 @@ const MicRecord = () => (
 );
 
 const Microphone = ({ micClickhandler }) => {
-    const { stream } = useUserMedia(constraints);
-    const { isRecording, startRecording, stopRecording, blobUrl, channelData } = useRecordMp3(
-        stream,
-        { bitrate: 128 }
-    );
+    // const { stream } = useUserMedia(constraints);
+    // const { isRecording, startRecording, stopRecording, blobUrl, channelData } = useRecordMp3(
+    //     stream,
+    //     { bitrate: 128 }
+    // );
 
     return (
         <div style={microphoneStyle}>
             <button
                 onClick={micClickhandler}
-                disabled={!stream}
+                // disabled={!stream}
                 style={micButtonStyle}>
-                {!stream ? <MicDisabled /> : isRecording ? <MicStop /> : <MicRecord />}
+                {/* {!stream ? <MicDisabled /> : isRecording ? <MicStop /> : <MicRecord />} */}
+                <MicRecord />
             </button>
             {/* {blobUrl && <audio controls src={blobUrl}></audio>} */}
         </div>
