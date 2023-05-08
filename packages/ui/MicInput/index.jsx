@@ -39,7 +39,7 @@ const MicRecord = () => (
     </>
 );
 
-const Microphone = () => {
+const Microphone = ({ micClickhandler }) => {
     const { stream } = useUserMedia(constraints);
     const { isRecording, startRecording, stopRecording, blobUrl, channelData } = useRecordMp3(
         stream,
@@ -49,12 +49,12 @@ const Microphone = () => {
     return (
         <div style={microphoneStyle}>
             <button
-                onClick={isRecording ? stopRecording : startRecording}
+                onClick={micClickhandler}
                 disabled={!stream}
                 style={micButtonStyle}>
                 {!stream ? <MicDisabled /> : isRecording ? <MicStop /> : <MicRecord />}
             </button>
-            {blobUrl && <audio controls src={blobUrl}></audio>}
+            {/* {blobUrl && <audio controls src={blobUrl}></audio>} */}
         </div>
     );
 };
