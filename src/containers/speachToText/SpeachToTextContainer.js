@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import RecorderContainer from "./RecorderContainer";
 import TranslationContainer from './TranslationContainer'
+import "./SpeachContainer.css"
 
 const SpeachToTextContainer = () => {
 
@@ -24,7 +25,7 @@ const SpeachToTextContainer = () => {
 
 
   return (
-      <div>
+      <div className="speachContainer">
           {/* <textarea 
             value={textToTranslate} 
             onChange={(e) => updateTranscribeText(e.target.value)}
