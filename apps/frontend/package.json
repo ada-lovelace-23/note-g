@@ -16,7 +16,18 @@
   },
   "license": "0BSD",
   "dependencies": {
+    "@aws-sdk/client-cognito-identity": "^3.328.0",
+    "@aws-sdk/client-comprehend": "^3.328.0",
+    "@aws-sdk/client-transcribe-streaming": "^3.328.0",
+    "@aws-sdk/client-translate": "^3.328.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.328.0",
+    "add": "^2.0.6",
+    "buffer": "^6.0.3",
     "gatsby": "^5.9.0",
+    "get-user-media-promise": "^1.1.4",
+    "microphone-stream": "^6.0.1",
+    "pnpm": "^8.4.0",
+    "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "ui": "workspace:*"
