@@ -1,7 +1,5 @@
 import React from 'react';
-import useUserMedia from 'react-use-user-media';
-import useRecordMp3 from 'use-record-mp3';
-import { Mic, MicOff, MicNone } from '@material-ui/icons';
+import './micStyles.css'
 
 const constraints = { audio: true, video: false };
 
@@ -11,6 +9,7 @@ const micButtonStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     margin: '16px',
+    background: '#fff'
 };
 
 const microphoneStyle = {
@@ -19,6 +18,7 @@ const microphoneStyle = {
     justifyContent: 'center',
     alignItems: 'center',
 };
+
 
 const MicDisabled = () => (
     <>
@@ -39,22 +39,20 @@ const MicRecord = () => (
     </>
 );
 
-const Microphone = () => {
-    const { stream } = useUserMedia(constraints);
-    const { isRecording, startRecording, stopRecording, blobUrl, channelData } = useRecordMp3(
-        stream,
-        { bitrate: 128 }
-    );
+const Microphone = ({ micClickhandler }) => {
 
     return (
         <div style={microphoneStyle}>
             <button
-                onClick={isRecording ? stopRecording : startRecording}
-                disabled={!stream}
-                style={micButtonStyle}>
-                {!stream ? <MicDisabled /> : isRecording ? <MicStop /> : <MicRecord />}
+                onClick={micClickhandler}
+                styles={micButtonStyle}
+                className="micInputButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="136" height="136" fill="red" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                </svg>
             </button>
-            {blobUrl && <audio controls src={blobUrl}></audio>}
+            {/* {blobUrl && <audio controls src={blobUrl}></audio>} */}
         </div>
     );
 };
