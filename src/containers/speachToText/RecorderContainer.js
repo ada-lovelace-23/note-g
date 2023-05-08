@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Microphone from 'ui/MicInput';
+import Microphone from '../../ui/MicInput';
 import {
     TranscribeStreamingClient,
     StartStreamTranscriptionCommand,
@@ -25,11 +25,7 @@ const RecorderContainer = ({ textToTranslatehandler }) => {
         }
         createTranscribeClient();
         createMicrophoneStream();
-        try {
-            await startStreaming(language, callback);
-        } catch (err) {
-            console.error(err);
-        }
+        await startStreaming(language, callback);
     };
 
     const stopRecording = function () {
@@ -76,37 +72,28 @@ const RecorderContainer = ({ textToTranslatehandler }) => {
             MediaSampleRateHertz: SAMPLE_RATE,
             AudioStream: getAudioStream(),
         });
-        try {
-            const data = await transcribeClient.send(command);
-
-            for await (const event of data.TranscriptResultStream) {
-                for (const result of event.TranscriptEvent.Transcript.Results || []) {
-                    if (result.IsPartial === false) {
-                        const noOfResults = result.Alternatives[0].Items.length;
-                        for (let i = 0; i < noOfResults; i++) {
-                            callback(result.Alternatives[0].Items[i].Content + ' ');
-                        }
+        const data = await transcribeClient.send(command);
+        for await (const event of data.TranscriptResultStream) {
+            for (const result of event.TranscriptEvent.Transcript.Results || []) {
+                if (result.IsPartial === false) {
+                    const noOfResults = result.Alternatives[0].Items.length;
+                    for (let i = 0; i < noOfResults; i++) {
+                        callback(result.Alternatives[0].Items[i].Content + ' ');
                     }
                 }
             }
-        } catch (err) {
-            console.error(err);
         }
     };
 
     const getAudioStream = async function* () {
-        try {
-            for await (const chunk of microphoneStream) {
-                if (chunk.length <= SAMPLE_RATE) {
-                    yield {
-                        AudioEvent: {
-                            AudioChunk: encodePCMChunk(chunk),
-                        },
-                    };
-                }
+        for await (const chunk of microphoneStream) {
+            if (chunk.length <= SAMPLE_RATE) {
+                yield {
+                    AudioEvent: {
+                        AudioChunk: encodePCMChunk(chunk),
+                    },
+                };
             }
-        } catch (err) {
-            console.error(err);
         }
     };
 

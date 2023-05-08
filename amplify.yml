@@ -1,27 +1,22 @@
 version: 1
-applications:
-  - appRoot: .
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - nvm install
-            - nvm use
-            # Install pnpm
-            - corepack enable
-            - corepack prepare pnpm@latest --activate
-            # Avoid memory issues
-            - export NODE_OPTIONS=--max-old-space-size=8192
-            # Ensure node_modules are correctly included in the build artifacts
-            - pnpm install
-        build:
-          commands:
-            - pnpm run build
-      artifacts:
-        # IMPORTANT - Please verify your build output directory
-        baseDirectory: /apps/frontend/public
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install
+        - nvm use
+        # Avoid memory issues
+        - export NODE_OPTIONS=--max-old-space-size=8192
+        # Ensure node_modules are correctly included in the build artifacts
+        - npm ci
+    build:
+      commands:
+        - pnpm run build
+  artifacts:
+    # IMPORTANT - Please verify your build output directory
+    baseDirectory: /public
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*

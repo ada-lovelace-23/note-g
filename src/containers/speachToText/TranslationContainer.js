@@ -1,31 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { TranslateClient, TranslateTextCommand } from '@aws-sdk/client-translate';
 import { ComprehendClient, DetectDominantLanguageCommand } from '@aws-sdk/client-comprehend';
+import './TranslationContainer.css';
 
 const TranslationContainer = ({ textToTranslate, textTranslatedHandler, languageTarget }) => {
     const [textTranslated, setTextTranslated] = useState('');
+    const translationSwitch = useRef('');
+
+    if (textToTranslate !== translationSwitch.current) {
+        translationSwitch.current = textToTranslate;
+    }
+
+    useEffect(() => {
+        if (textToTranslate != '') {
+            translateTextToLanguage(textToTranslate, languageTarget);
+        }
+    }, [translationSwitch.current]);
 
     const translateTextToLanguage = async (text, targetLanguage) => {
-        try {
-            const sourceLanguage = await detectLanguageOfText(text);
-            return await translateTextFromLanguageToLanguage(text, sourceLanguage, targetLanguage);
-        } catch (err) {
-            console.error(err);
-        }
+        const sourceLanguage = await detectLanguageOfText(text);
+        return await translateTextFromLanguageToLanguage(text, sourceLanguage, targetLanguage);
     };
 
     const detectLanguageOfText = async (text) => {
         const comprehendClient = createComprehendClient();
-        try {
-            const data = await comprehendClient.send(
-                new DetectDominantLanguageCommand({ Text: text })
-            );
-            return data.Languages[0].LanguageCode;
-        } catch (err) {
-            console.error(err);
-        }
+        const data = await comprehendClient.send(new DetectDominantLanguageCommand({ Text: text }));
+        return data.Languages[0].LanguageCode;
     };
 
     const createComprehendClient = () => {
@@ -45,14 +47,10 @@ const TranslationContainer = ({ textToTranslate, textTranslatedHandler, language
             SourceLanguageCode: sourceLanguage,
             TargetLanguageCode: targetLanguage,
         };
-        try {
-            const data = await translateClient.send(new TranslateTextCommand(translateParams));
-            setTextTranslated(data.TranslatedText);
-            textTranslatedHandler(data.TranslatedText);
-            return data.TranslatedText;
-        } catch (err) {
-            console.error(err);
-        }
+        const data = await translateClient.send(new TranslateTextCommand(translateParams));
+        setTextTranslated(data.TranslatedText);
+        textTranslatedHandler(data.TranslatedText);
+        return data.TranslatedText;
     };
 
     const createTranslateClient = () => {
@@ -65,15 +63,11 @@ const TranslationContainer = ({ textToTranslate, textTranslatedHandler, language
         });
     };
 
-    const translateHandler = () => {
-        translateTextToLanguage(textToTranslate, languageTarget);
-    };
-
     return (
-        <>
-            <button onClick={translateHandler}>Translate</button>
-            <textarea value={textTranslated} readOnly />
-        </>
+        <div className="translationContainer">
+            {/* <button onClick={translateHandler}>Translate</button> */}
+            <textarea className="translationBox" value={textTranslated} readOnly />
+        </div>
     );
 };
 
