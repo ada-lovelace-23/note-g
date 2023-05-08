@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Microphone from './../../../packages/ui/MicInput';
 import {
   TranscribeStreamingClient,
@@ -14,14 +14,14 @@ import getUserMedia from "get-user-media-promise";
 const RecorderContainer = ({ textToTranslatehandler }) => {
   const [recording, setRecording] = useState(false);
   const SAMPLE_RATE = 44100;
-  let microphoneStream = undefined;
+  let microphoneStream = useRef(null);
   let transcribeClient = undefined;
 
   const startRecording = async (language, callback) => {
       if (!language) {
         return false;
       }
-      if (microphoneStream || transcribeClient) {
+      if (microphoneStream.current || transcribeClient) {
         stopRecording();
       }
       createTranscribeClient();
@@ -30,10 +30,11 @@ const RecorderContainer = ({ textToTranslatehandler }) => {
   };
 
   const stopRecording = function () {
-    if (microphoneStream) {
-      microphoneStream.stop();
-      microphoneStream.destroy();
-      microphoneStream = undefined;
+    if (microphoneStream.current) {
+      microphoneStream.current.stop();
+      microphoneStream.current.destroy();
+      microphoneStream.current = undefined;
+      setRecording(false);
     }
     if (transcribeClient) {
       transcribeClient.destroy();
@@ -52,15 +53,14 @@ const RecorderContainer = ({ textToTranslatehandler }) => {
   }
 
   const createMicrophoneStream = async () => {
-    microphoneStream = new MicrophoneStream();
+    microphoneStream.current = new MicrophoneStream();
     getUserMedia({
       video: false,
       audio: true,
     })
     .then(function(stream) {
-      microphoneStream.setStream(stream);
+      microphoneStream.current.setStream(stream);
     }).catch(function(error) {
-      console.log(error);
     });
   }
 
@@ -86,7 +86,7 @@ const RecorderContainer = ({ textToTranslatehandler }) => {
   }
 
   const getAudioStream = async function* () {
-    for await (const chunk of microphoneStream) {
+    for await (const chunk of microphoneStream.current) {
       if (chunk.length <= SAMPLE_RATE) {
         yield {
           AudioEvent: {
@@ -111,7 +111,6 @@ const RecorderContainer = ({ textToTranslatehandler }) => {
 
   const micClickhandler = async () => {
     if(recording === true){
-      console.log("recording")
       stopRecording();
     }else{
       try {
