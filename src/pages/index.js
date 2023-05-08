@@ -19,4 +19,10 @@ const IndexPage = () => {
 
 export default IndexPage
 
-export const Head = () => <title>Home Page</title>
+export const Head = () => (
+  <>
+    <title>Ayudante de la Cruz Roja</title>
+    <meta name="robots" content="noindex,nofollow" />
+
+  </>
+)
