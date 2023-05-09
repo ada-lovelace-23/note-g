@@ -28,7 +28,6 @@ const TranslationContainer = ({
 
     const getKeyPhrases = async () => {
         const client = (createComprehendClient());
-        console.log(textToTranslate)
         const input = { // BatchDetectKeyPhrasesRequest
             TextList: [ // CustomerInputStringList // required
                 textTranslated,
@@ -37,7 +36,6 @@ const TranslationContainer = ({
           };
          const command = new BatchDetectKeyPhrasesCommand(input);
         const response = await client.send(command);
-        console.log(response.ResultList[0].KeyPhrases)
         setKeyPhrases(response.ResultList[0].KeyPhrases)
 
     }
@@ -85,7 +83,6 @@ const TranslationContainer = ({
             }),
         });
     };
-console.log(keyPhrases, "te")
     return (
         <div className="translationContainer">
             {loading ? (
@@ -100,7 +97,6 @@ console.log(keyPhrases, "te")
                     {
                         keyPhrases &&
                             keyPhrases.map(({Text, BeginOffset}) => {
-                                console.log(Text)
                                 return(
                                     <div key={BeginOffset}>{Text}</div>
                                 )
