@@ -4,7 +4,7 @@ import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-id
 import { TranslateClient, TranslateTextCommand } from '@aws-sdk/client-translate';
 import { ComprehendClient, DetectDominantLanguageCommand } from '@aws-sdk/client-comprehend';
 import './TranslationContainer.css';
-import loadingImg from '../../images/loading.gif';
+// import loadingImg from '../../images/loading.gif';
 
 const TranslationContainer = ({
     textToTranslate,
@@ -71,11 +71,12 @@ const TranslationContainer = ({
 
     return (
         <div className="translationContainer">
-            {loading ? (
+            <textarea className="translationBox" value={textTranslated} readOnly />
+            {/* {loading ? (
                 <img className="loadingStyle" src={loadingImg} />
             ) : (
                 <textarea className="translationBox" value={textTranslated} readOnly />
-            )}
+            )} */}
         </div>
     );
 };
