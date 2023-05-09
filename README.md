@@ -22,7 +22,7 @@ Los procesos de acogida y valoración, que se realizan como primer contacto entr
 
 ## Instalación
 
-## Crear Recursos
+### Crear Recursos
 
 You can create the AWS resources required for this cross-service example using either of the following:
 
