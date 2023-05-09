@@ -2,7 +2,7 @@
     background: none;
     border-radius: 120px;
     border: none;
-    margin-top: 40px;
+    margin-top: 20px;
     background: #fff;
     padding: 2px 2px 0px 2px;
 }
@@ -10,7 +10,7 @@
     font-size: 135px;
     color: rgb(198, 30, 30)
 }
-.recordIcon--disable{
+.recordIcon--active{
     color: rgb(120, 120, 120);
     -o-animation: fadeIt 1s ease-in-out; 
         animation: fadeIt 1s ease-in-out; 

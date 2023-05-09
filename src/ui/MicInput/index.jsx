@@ -24,7 +24,7 @@ const microphoneStyle = {
 const Microphone = ({ micClickhandler, isRecording }) => {
 
     const iconValues = {
-        className: isRecording ? "recordIcon recordIcon--disable" : "recordIcon"
+        className: isRecording ? "recordIcon recordIcon--active" : "recordIcon"
     }
     return (
         <div style={microphoneStyle}>
