@@ -12,6 +12,7 @@ import getUserMedia from 'get-user-media-promise';
 
 const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
   const [recording, setRecording] = useState(false);
+  const [languagSource, setLanguagSource] = useState("en-US");
   const SAMPLE_RATE = 44100;
   let microphoneStream = useRef(null);
   let transcribeClient = undefined;
@@ -65,6 +66,7 @@ const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
 
     const startStreaming = async (language, callback) => {
         setRecording(true);
+        console.log(language)
         const command = new StartStreamTranscriptionCommand({
             LanguageCode: language,
             MediaEncoding: 'pcm',
@@ -115,7 +117,7 @@ const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
     }else{
       try {
         loadingHandler(true)
-        await startRecording("en-US", onTranscriptionDataReceived);
+        await startRecording(languagSource, onTranscriptionDataReceived);
       } catch(error) {
         loadingHandler(false)
         alert("An error occurred while recording: " + error.message);
@@ -128,8 +130,18 @@ const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
         textToTranslatehandler(data);
     };
 
+    const laguageHandler = (language) => {
+      setLanguagSource(language)
+    }
+
     return (
         <>
+          <select onChange={(e) => {laguageHandler(e.target.value)}}>
+            <option value="en-US"> Ingles </option>
+            <option value="it-IT"> Italina </option>
+            <option value="fr-FR"> Frances </option>
+            <option value="zh-CN"> Chino </option>
+          </select>
             <Microphone micClickhandler={micClickhandler} isRecording={recording} />
         </>
     );
