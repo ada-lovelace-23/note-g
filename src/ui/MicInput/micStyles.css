@@ -6,3 +6,25 @@
     background: #fff;
     padding: 2px 2px 0px 2px;
 }
+.recordIcon{
+    font-size: 135px;
+    color: rgb(198, 30, 30)
+}
+.recordIcon--disable{
+    color: rgb(120, 120, 120);
+    -o-animation: fadeIt 1s ease-in-out; 
+        animation: fadeIt 1s ease-in-out; 
+        animation-iteration-count: 2000;
+}
+@-o-keyframes fadeIt {
+    0%   { color: rgb(198, 30, 30); }
+    50%  { color: rgb(120, 120, 120); }
+    100% { color: rgb(198, 30, 30); }
+  }
+  @keyframes fadeIt {
+    0%   { color: rgb(198, 30, 30); }
+    50%  { color: rgb(120, 120, 120); }
+    100% { color: rgb(198, 30, 30); }
+  }
+  
+ 

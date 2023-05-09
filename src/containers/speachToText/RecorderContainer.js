@@ -130,7 +130,7 @@ const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
 
     return (
         <>
-            <Microphone micClickhandler={micClickhandler} />
+            <Microphone micClickhandler={micClickhandler} isRecording={recording} />
         </>
     );
 };

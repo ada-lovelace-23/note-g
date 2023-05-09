@@ -1,7 +1,8 @@
 import React from "react";
 import SpeachToTextContainer from "../containers/speachToText/SpeachToTextContainer";
-import logo from "../images/logo.svg"
-import Footer from "../ui/Footer"
+import logo from "../images/logo.svg";
+import Footer from "../ui/Footer";
+import HeaderTags from "../ui/HeaderTags";
 
 const IndexPage = () => {
   const mainContainerStyles = {
@@ -22,10 +23,9 @@ const IndexPage = () => {
 
 export default IndexPage
 
+
 export const Head = () => (
   <>
-    <title>Ayudante de la Cruz Roja</title>
-    <meta name="robots" content="noindex,nofollow" />
-
+    <HeaderTags />
   </>
 )

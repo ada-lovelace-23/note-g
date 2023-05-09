@@ -1,5 +1,6 @@
-import * as React from "react"
-import { Link } from "gatsby"
+import * as React from "react";
+import { Link } from "gatsby";
+import HeaderTags from "../ui/HeaderTags";
 
 const pageStyles = {
   color: "#232129",
@@ -48,7 +49,6 @@ export default NotFoundPage
 
 export const Head = () => (
   <>
-    <title>Not found</title>
-    <meta name="robots" content="noindex,nofollow" />
+    <HeaderTags />
   </>
 )
