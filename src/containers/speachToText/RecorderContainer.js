@@ -52,7 +52,7 @@ const RecorderContainer = ({ volunteer, user, textToTranslatehandler, loadingHan
 
     const createTranscribeClient = () => {
         transcribeClient = new TranscribeStreamingClient({
-            region: 'eu-west-1',
+            region: process.env.GATSBY_REGION,
             credentials: fromCognitoIdentityPool({
                 client: new CognitoIdentityClient({ region: process.env.GATSBY_REGION }),
                 identityPoolId: process.env.GATSBY_IDENTITY_POOL_ID,
