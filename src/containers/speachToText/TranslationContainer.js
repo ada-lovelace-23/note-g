@@ -55,7 +55,7 @@ const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
 
     const createComprehendClient = () => {
         return new ComprehendClient({
-            region: 'eu-west-1',
+            region: process.env.GATSBY_REGION,
             credentials: fromCognitoIdentityPool({
                 client: new CognitoIdentityClient({ region: process.env.GATSBY_REGION }),
                 identityPoolId: process.env.GATSBY_IDENTITY_POOL_ID,
@@ -79,7 +79,7 @@ const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
 
     const createTranslateClient = () => {
         return new TranslateClient({
-            region: 'eu-west-1',
+            region: process.env.GATSBY_REGION,
             credentials: fromCognitoIdentityPool({
                 client: new CognitoIdentityClient({ region: process.env.GATSBY_REGION }),
                 identityPoolId: process.env.GATSBY_IDENTITY_POOL_ID,
