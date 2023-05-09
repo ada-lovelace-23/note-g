@@ -3,23 +3,23 @@
  */
 module.exports = {
     siteMetadata: {
-        siteUrl: `https://www.yourdomain.tld`,
+        siteUrl: `https://www.note-g.online`,
     },
-    plugins: 
-        [
-            `gatsby-plugin-pnpm-gatsby-5`,
-            {
-                resolve: `gatsby-omni-font-loader`,
-                options: {
+    plugins: [
+        `gatsby-plugin-pnpm-gatsby-5`,
+        `gatsby-plugin-styled-components`,
+        {
+            resolve: `gatsby-omni-font-loader`,
+            options: {
                 enableListener: true,
                 preconnect: [`https://fonts.googleapis.com`, `https://fonts.gstatic.com`],
                 web: [
                     {
-                    name: `Open Sans`,
-                    file: `https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap`,
+                        name: `Roboto`,
+                        file: `https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap`,
                     },
                 ],
-                },
-            }
-        ],
+            },
+        },
+    ],
 };
