@@ -7,6 +7,8 @@ const GlobalStyle = createGlobalStyle`
         --secondary: #ED1B2E;
         --secondary-100: #cb1827;
         --white: #fff;
+        --white-100: #FBFBFB;
+        --white-200: #ECECEC;
 
         // Fix error in MUI Grid
         --Grid-columns: 12;
