@@ -42,5 +42,20 @@
   "devDependencies": {
     "eslint-plugin-flowtype": "^8.0.3",
     "gatsby-plugin-pnpm-gatsby-5": "^1.2.11"
-  }
+  },
+  "contributors": [
+    {
+      "name": "Agnese Miselli",
+      "email": "agnese.miselli@gmail.com"
+    },
+    {
+      "name": "Honza Pozivil",
+      "email": "crs1138@me.com",
+      "url": "https://crs1138.me"
+    },
+    {
+      "name": "Pedro Salas",
+      "email": "be.pdro@gmail.com"
+    }
+  ]
 }
