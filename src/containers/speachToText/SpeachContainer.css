@@ -1,12 +1,13 @@
-.speachContainer{
+.speachContainer {
     margin: 20px auto 10px auto;
     max-width: 329px;
     background: #ffffff;
     border-radius: 27px;
     padding: 20px;
-    box-shadow: 0px 0px 10px #e3e3e3;
+    box-shadow: 0px 3px 10px var(--white-200);
     min-height: 683px;
+    max-height: 95vh;
 }
-body{
+body {
     background: #f5f5f5;
 }

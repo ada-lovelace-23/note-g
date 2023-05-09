@@ -2,9 +2,9 @@
  * @type {import('gatsby').GatsbyConfig}
  */
 
-require("dotenv").config({
+require('dotenv').config({
     path: `.env.${process.env.NODE_ENV}`,
-})
+});
 
 module.exports = {
     siteMetadata: {
@@ -27,15 +27,23 @@ module.exports = {
             },
         },
         {
-            resolve: "gatsby-plugin-google-tagmanager",
+            resolve: 'gatsby-plugin-google-tagmanager',
             options: {
-              id: "G-0MZYMMQK2X",
-        
-              // Include GTM in development.
-              //
-              // Defaults to false meaning GTM will only be loaded in production.
-              includeInDevelopment: false,
+                id: 'G-0MZYMMQK2X',
+
+                // Include GTM in development.
+                //
+                // Defaults to false meaning GTM will only be loaded in production.
+                includeInDevelopment: false,
             },
-          }
+        },
+        {
+            resolve: 'gatsby-plugin-react-svg',
+            options: {
+                rule: {
+                    include: /svg/,
+                },
+            },
+        },
     ],
 };
