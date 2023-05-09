@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import RecorderContainer from './RecorderContainer';
 import TranslationContainer from './TranslationContainer';
+import Header from '../../ui/Header';
+import NoteGLogo from '../../../static/note-g.svg';
 import './SpeachContainer.css';
 
 const SpeachToTextContainer = () => {
@@ -13,16 +15,11 @@ const SpeachToTextContainer = () => {
     const textToTranslatehandler = (data) => {
         textTranscribe.current = textTranscribe.current + ' ' + data;
         updateTranscribeText(textTranscribe.current);
-        console.log(textTranscribe.current, textToTranslate);
     };
 
     const updateTranscribeText = (text) => {
         setTextToTranslate(text);
     };
-
-    // const textTranslatedHandler = (data) => {
-    //     setTextTranslated(data);
-    // };
 
     const volunteerLanguageHandler = (language) => {
         if (language?.code) {
@@ -42,6 +39,9 @@ const SpeachToTextContainer = () => {
 
     return (
         <div className="speachContainer">
+            <Header>
+                <NoteGLogo style={{ width: '50%', height: 72 }} />
+            </Header>
             <TranslationContainer
                 targetLanguage={volunteerLanguage}
                 textToTranslate={textToTranslate}

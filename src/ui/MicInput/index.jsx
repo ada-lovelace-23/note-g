@@ -15,7 +15,14 @@ const micInputStyle = {
     alignItems: 'center',
 };
 
-function showRightMic(isRecording) {
+function showRightMic({ isRecording, hasMicAccess }) {
+    if (!hasMicAccess) {
+        return (
+            <>
+                <MicOffIcon size="large" />
+            </>
+        );
+    }
     return isRecording ? (
         <>
             <MicIcon size="large" />
@@ -29,15 +36,18 @@ function showRightMic(isRecording) {
     );
 }
 
-const Microphone = ({ micClickhandler, isRecording }) => {
+const Microphone = ({ micClickhandler, isRecording, hasMicAccess }) => {
     return (
         <div style={micInputStyle}>
             <Button
                 variant="contained"
-                onClick={micClickhandler}
+                onClick={() => {
+                    hasMicAccess && micClickhandler();
+                }}
                 size="large"
-                isRecording={isRecording}>
-                {showRightMic(isRecording)}
+                disabled={!hasMicAccess}
+                isRecording={hasMicAccess && isRecording}>
+                {showRightMic({ isRecording, hasMicAccess })}
             </Button>
         </div>
     );

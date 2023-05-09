@@ -15,6 +15,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const RecorderContainer = ({ volunteer, user, textToTranslatehandler }) => {
+    const [hasMicAccess, setHasMicAccess] = useState(true);
     const [recording, setRecording] = useState(false);
     // const [userLanguage, setUserLanguageSource] = useState('en-US');
     const { language: userLanguage, languageHandler: userLanguageHandler } = user;
@@ -69,15 +70,16 @@ const RecorderContainer = ({ volunteer, user, textToTranslatehandler }) => {
                 video: false,
                 audio: true,
             });
+            setHasMicAccess(true);
             microphoneStream.current.setStream(stream);
         } catch (err) {
             console.error(err);
+            setHasMicAccess(false);
         }
     };
 
     const startStreaming = async (userLanguage, callback) => {
         setRecording(true);
-        console.log(userLanguage);
         const command = new StartStreamTranscriptionCommand({
             LanguageCode: userLanguage,
             MediaEncoding: 'pcm',
@@ -175,7 +177,11 @@ const RecorderContainer = ({ volunteer, user, textToTranslatehandler }) => {
                         />
                     )}
 
-                    <Microphone micClickhandler={micClickhandler} isRecording={recording} />
+                    <Microphone
+                        micClickhandler={micClickhandler}
+                        isRecording={recording}
+                        hasMicAccess={hasMicAccess}
+                    />
                 </Box>
                 {/* </Box> */}
             </Grid>

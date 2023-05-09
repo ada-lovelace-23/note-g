@@ -12,7 +12,6 @@ const KeyPhrasesNucleus = ({
     className,
 }) => {
     const [open, setOpen] = useState(false);
-    console.log({ keyPhrases });
     return (
         <aside className={className}>
             {open && (

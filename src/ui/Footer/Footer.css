@@ -1,7 +1,16 @@
-.footer a{
+footer a,
+footer p {
     margin-right: 5px;
     color: #6a6a6a;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 0.75rem;
     font-family: 'Roboto', sans-serif;
+    vertical-align: middle;
+}
+
+footer p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
 }
