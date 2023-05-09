@@ -1,6 +1,8 @@
 import React from "react";
 import SpeachToTextContainer from "../containers/speachToText/SpeachToTextContainer";
 import logo from "../images/logo.svg"
+import Footer from "../ui/Footer"
+
 const IndexPage = () => {
   const mainContainerStyles = {
     textAlign: "center"
@@ -13,6 +15,7 @@ const IndexPage = () => {
     <main style={mainContainerStyles}>
         {/* <img style={logoStyles} src={logo} /> */}
         <SpeachToTextContainer />
+        <Footer />
     </main>
   )
 }

@@ -11,3 +11,8 @@
     display: flex;
     margin: 20px 0 0 0;
 }
+.loadingStyle{
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}

@@ -10,7 +10,7 @@ import MicrophoneStream from 'microphone-stream';
 import { Buffer } from 'buffer';
 import getUserMedia from 'get-user-media-promise';
 
-const RecorderContainer = ({ textToTranslatehandler }) => {
+const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
   const [recording, setRecording] = useState(false);
   const SAMPLE_RATE = 44100;
   let microphoneStream = useRef(null);
@@ -77,6 +77,7 @@ const RecorderContainer = ({ textToTranslatehandler }) => {
                 if (result.IsPartial === false) {
                     const noOfResults = result.Alternatives[0].Items.length;
                     for (let i = 0; i < noOfResults; i++) {
+                        loadingHandler(false)
                         callback(result.Alternatives[0].Items[i].Content + ' ');
                     }
                 }
@@ -113,8 +114,10 @@ const RecorderContainer = ({ textToTranslatehandler }) => {
       stopRecording();
     }else{
       try {
+        loadingHandler(true)
         await startRecording("en-US", onTranscriptionDataReceived);
       } catch(error) {
+        loadingHandler(false)
         alert("An error occurred while recording: " + error.message);
         stopRecording();
       }

@@ -7,6 +7,7 @@ const SpeachToTextContainer = () => {
 
   const [textToTranslate, setTextToTranslate] = useState("");
   const [textTranslated, setTextTranslated] = useState("");
+  const [loading, setLoading] = useState(false);
   const textTranscribe = useRef("");
   
   const textToTranslatehandler = (data) =>{
@@ -23,6 +24,10 @@ const SpeachToTextContainer = () => {
     setTextTranslated(data)
   }
 
+  const loadingHandler = (config) => {
+    setLoading(config)
+  }
+
 
   return (
       <div className="speachContainer">
@@ -32,11 +37,13 @@ const SpeachToTextContainer = () => {
             /> */}
           <RecorderContainer 
             textToTranslatehandler={textToTranslatehandler} 
+            loadingHandler={loadingHandler}
             />
           <TranslationContainer 
             textToTranslate={textToTranslate} 
             languageTarget="es"
             textTranslatedHandler={textTranslatedHandler} 
+            loading={loading}
             />
       </div>
   );
