@@ -2,17 +2,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { TranslateClient, TranslateTextCommand } from '@aws-sdk/client-translate';
-import { ComprehendClient, DetectDominantLanguageCommand, BatchDetectKeyPhrasesCommand } from '@aws-sdk/client-comprehend';
+import {
+    ComprehendClient,
+    DetectDominantLanguageCommand,
+    BatchDetectKeyPhrasesCommand,
+} from '@aws-sdk/client-comprehend';
+import LinearIndeterminate from '../../ui/LinearIndeterminate';
 import './TranslationContainer.css';
-import loadingImg from '../../images/loading.gif';
 
-const TranslationContainer = ({
-    textToTranslate,
-    textTranslatedHandler,
-    targetLanguage,
-    loading,
-}) => {
+const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
     const [textTranslated, setTextTranslated] = useState('');
+    const [isLoadingTranslation, setIsLoadingTranslation] = useState(false);
     const [keyPhrases, setKeyPhrases] = useState(null);
     const translationSwitch = useRef('');
 
@@ -22,23 +22,25 @@ const TranslationContainer = ({
 
     useEffect(() => {
         if (textToTranslate != '') {
+            setIsLoadingTranslation(true);
             translateTextToLanguage(textToTranslate, targetLanguage);
         }
     }, [translationSwitch.current]);
 
     const getKeyPhrases = async () => {
-        const client = (createComprehendClient());
-        const input = { // BatchDetectKeyPhrasesRequest
-            TextList: [ // CustomerInputStringList // required
+        const client = createComprehendClient();
+        const input = {
+            // BatchDetectKeyPhrasesRequest
+            TextList: [
+                // CustomerInputStringList // required
                 textTranslated,
             ],
-            LanguageCode: "es"
-          };
-         const command = new BatchDetectKeyPhrasesCommand(input);
+            LanguageCode: 'es',
+        };
+        const command = new BatchDetectKeyPhrasesCommand(input);
         const response = await client.send(command);
-        setKeyPhrases(response.ResultList[0].KeyPhrases)
-
-    }
+        setKeyPhrases(response.ResultList[0].KeyPhrases);
+    };
 
     const translateTextToLanguage = async (text, targetLanguage) => {
         const sourceLanguage = await detectLanguageOfText(text);
@@ -70,7 +72,8 @@ const TranslationContainer = ({
         };
         const data = await translateClient.send(new TranslateTextCommand(translateParams));
         setTextTranslated(data.TranslatedText);
-        textTranslatedHandler(data.TranslatedText);
+        setIsLoadingTranslation(false);
+        // textTranslatedHandler(data.TranslatedText);
         return data.TranslatedText;
     };
 
@@ -84,27 +87,14 @@ const TranslationContainer = ({
         });
     };
     return (
-        <div className="translationContainer">
-            {loading ? (
-                <img className="loadingStyle" src={loadingImg} />
-            ) : (
-                <>
-                    <textarea className="translationBox" value={textTranslated} readOnly />
-                    {
-                        textTranslated != '' && <button onClick={getKeyPhrases}> Get Key Phrases </button> 
-                    
-                    }
-                    {
-                        keyPhrases &&
-                            keyPhrases.map(({Text, BeginOffset}) => {
-                                return(
-                                    <div key={BeginOffset}>{Text}</div>
-                                )
-                            })
-                    }
-                </>
-            )}
-        </div>
+        <section className="translationContainer">
+            <textarea className="translationBox" value={textTranslated} readOnly />
+            {isLoadingTranslation && <LinearIndeterminate sx={{ color: 'var(--primary-100)' }} />}
+            {keyPhrases &&
+                keyPhrases.map(({ Text, BeginOffset }) => {
+                    return <div key={BeginOffset}>{Text}</div>;
+                })}
+        </section>
     );
 };
 

@@ -11,8 +11,10 @@ import { Buffer } from 'buffer';
 import getUserMedia from 'get-user-media-promise';
 import LanguageSelector from '../../ui/LanguageSelector';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
-const RecorderContainer = ({ volunteer, user, textToTranslatehandler, loadingHandler }) => {
+const RecorderContainer = ({ volunteer, user, textToTranslatehandler }) => {
     const [recording, setRecording] = useState(false);
     // const [userLanguage, setUserLanguageSource] = useState('en-US');
     const { language: userLanguage, languageHandler: userLanguageHandler } = user;
@@ -88,7 +90,7 @@ const RecorderContainer = ({ volunteer, user, textToTranslatehandler, loadingHan
                 if (result.IsPartial === false) {
                     const noOfResults = result.Alternatives[0].Items.length;
                     for (let i = 0; i < noOfResults; i++) {
-                        loadingHandler(false);
+                        // loadingHandler(false);
                         callback(result.Alternatives[0].Items[i].Content + ' ');
                     }
                 }
@@ -124,14 +126,14 @@ const RecorderContainer = ({ volunteer, user, textToTranslatehandler, loadingHan
         if (recording === true) {
             stopRecording();
         } else {
+            // loadingHandler(true);
             try {
-                loadingHandler(true);
                 await startRecording(userLanguage, onTranscriptionDataReceived);
             } catch (error) {
-                loadingHandler(false);
                 alert('An error occurred while recording: ' + error.message);
                 stopRecording();
             }
+            // loadingHandler(false);
         }
     };
 
@@ -157,8 +159,25 @@ const RecorderContainer = ({ volunteer, user, textToTranslatehandler, loadingHan
                     languageHandler={volunteerLanguageHandler}
                 />
             </Grid>
-            <Grid xs={12}>
-                <Microphone micClickhandler={micClickhandler} isRecording={recording} />
+            <Grid xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {/* <Box sx={{ display: 'flex', alignItems: 'center' }}> */}
+                <Box sx={{ m: 1, position: 'relative' }}>
+                    {recording && (
+                        <CircularProgress
+                            size={80}
+                            sx={{
+                                color: 'var(--secondary-100)',
+                                position: 'absolute',
+                                top: -6,
+                                left: -6,
+                                zIndex: 0,
+                            }}
+                        />
+                    )}
+
+                    <Microphone micClickhandler={micClickhandler} isRecording={recording} />
+                </Box>
+                {/* </Box> */}
             </Grid>
         </Grid>
     );
