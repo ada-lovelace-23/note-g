@@ -56,8 +56,8 @@ const RecorderContainer = ({ volunteer, user, textToTranslatehandler }) => {
         transcribeClient = new TranscribeStreamingClient({
             region: 'eu-west-1',
             credentials: fromCognitoIdentityPool({
-                client: new CognitoIdentityClient({ region: 'eu-west-1' }),
-                identityPoolId: 'eu-west-1:3608148b-3dee-4d48-9b28-0bf1e6332bc8',
+                client: new CognitoIdentityClient({ region: process.env.GATSBY_REGION }),
+                identityPoolId: process.env.GATSBY_IDENTITY_POOL_ID,
             }),
         });
     };

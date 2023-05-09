@@ -2,14 +2,18 @@ import React, { useState, useRef, useEffect } from 'react';
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { TranslateClient, TranslateTextCommand } from '@aws-sdk/client-translate';
-import { ComprehendClient, DetectDominantLanguageCommand } from '@aws-sdk/client-comprehend';
+import {
+    ComprehendClient,
+    DetectDominantLanguageCommand,
+    BatchDetectKeyPhrasesCommand,
+} from '@aws-sdk/client-comprehend';
 import LinearIndeterminate from '../../ui/LinearIndeterminate';
 import './TranslationContainer.css';
 
 const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
     const [textTranslated, setTextTranslated] = useState('');
     const [isLoadingTranslation, setIsLoadingTranslation] = useState(false);
-
+    const [keyPhrases, setKeyPhrases] = useState(null);
     const translationSwitch = useRef('');
 
     if (textToTranslate !== translationSwitch.current) {
@@ -22,6 +26,21 @@ const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
             translateTextToLanguage(textToTranslate, targetLanguage);
         }
     }, [translationSwitch.current]);
+
+    const getKeyPhrases = async () => {
+        const client = createComprehendClient();
+        const input = {
+            // BatchDetectKeyPhrasesRequest
+            TextList: [
+                // CustomerInputStringList // required
+                textTranslated,
+            ],
+            LanguageCode: 'es',
+        };
+        const command = new BatchDetectKeyPhrasesCommand(input);
+        const response = await client.send(command);
+        setKeyPhrases(response.ResultList[0].KeyPhrases);
+    };
 
     const translateTextToLanguage = async (text, targetLanguage) => {
         const sourceLanguage = await detectLanguageOfText(text);
@@ -38,8 +57,8 @@ const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
         return new ComprehendClient({
             region: 'eu-west-1',
             credentials: fromCognitoIdentityPool({
-                client: new CognitoIdentityClient({ region: 'eu-west-1' }),
-                identityPoolId: 'eu-west-1:3608148b-3dee-4d48-9b28-0bf1e6332bc8',
+                client: new CognitoIdentityClient({ region: process.env.GATSBY_REGION }),
+                identityPoolId: process.env.GATSBY_IDENTITY_POOL_ID,
             }),
         });
     };
@@ -62,16 +81,19 @@ const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
         return new TranslateClient({
             region: 'eu-west-1',
             credentials: fromCognitoIdentityPool({
-                client: new CognitoIdentityClient({ region: 'eu-west-1' }),
-                identityPoolId: 'eu-west-1:3608148b-3dee-4d48-9b28-0bf1e6332bc8',
+                client: new CognitoIdentityClient({ region: process.env.GATSBY_REGION }),
+                identityPoolId: process.env.GATSBY_IDENTITY_POOL_ID,
             }),
         });
     };
-
     return (
         <section className="translationContainer">
             <textarea className="translationBox" value={textTranslated} readOnly />
             {isLoadingTranslation && <LinearIndeterminate sx={{ color: 'var(--primary-100)' }} />}
+            {keyPhrases &&
+                keyPhrases.map(({ Text, BeginOffset }) => {
+                    return <div key={BeginOffset}>{Text}</div>;
+                })}
         </section>
     );
 };
