@@ -1,7 +1,12 @@
 import React from 'react';
-import './micStyles.css'
-import { BsFillRecordCircleFill } from "react-icons/bs";
-import { IconContext } from "react-icons";
+// import './micStyles.jsx';
+// import { BsFillRecordCircleFill } from "react-icons/bs";
+// import { IconContext } from "react-icons";
+
+import Button from './ButtonStyled';
+import MicIcon from '@mui/icons-material/Mic';
+import MicNoneIcon from '@mui/icons-material/MicNone';
+import MicOffIcon from '@mui/icons-material/MicOff';
 
 const micButtonStyle = {
     display: 'flex',
@@ -9,7 +14,7 @@ const micButtonStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     margin: '16px',
-    background: '#fff'
+    background: '#fff',
 };
 
 const microphoneStyle = {
@@ -19,24 +24,30 @@ const microphoneStyle = {
     alignItems: 'center',
 };
 
-
+function showRightMic(isRecording) {
+    return isRecording ? (
+        <>
+            <MicIcon size="large" />
+            <span className="sr-only">Record</span>
+        </>
+    ) : (
+        <>
+            <MicNoneIcon size="large" />
+            <span className="sr-only">Stop</span>
+        </>
+    );
+}
 
 const Microphone = ({ micClickhandler, isRecording }) => {
-
-    const iconValues = {
-        className: isRecording ? "recordIcon recordIcon--active" : "recordIcon"
-    }
     return (
         <div style={microphoneStyle}>
-            <button
+            <Button
+                variant="contained"
                 onClick={micClickhandler}
-                styles={micButtonStyle}
-                className="micInputButton">
-                    <IconContext.Provider value={iconValues}>
-                        <BsFillRecordCircleFill />
-                    </IconContext.Provider>
-            </button>
-            {/* {blobUrl && <audio controls src={blobUrl}></audio>} */}
+                size="large"
+                isRecording={isRecording}>
+                {showRightMic(isRecording)}
+            </Button>
         </div>
     );
 };
