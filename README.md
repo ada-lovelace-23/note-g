@@ -1,3 +1,7 @@
+## Descripción del Proyecto
+
+Reto: Cruz Roja
+
 ## Create the resources
 
 You can create the AWS resources required for this cross-service example using either of the following:
