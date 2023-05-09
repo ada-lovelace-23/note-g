@@ -1,5 +1,7 @@
 import React from "react";
 import Content from "../ui/Content/Content";
+import Footer from "../ui/Footer";
+import HeaderTags from "../ui/HeaderTags";
 
 const TermsAndConditions = () => {
   
@@ -22,8 +24,6 @@ export default TermsAndConditions
 
 export const Head = () => (
   <>
-    <title>Ayudante de la Cruz Roja</title>
-    <meta name="robots" content="noindex,nofollow" />
-
+    <HeaderTags />
   </>
 )
