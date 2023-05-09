@@ -8,6 +8,7 @@ import {
     BatchDetectKeyPhrasesCommand,
 } from '@aws-sdk/client-comprehend';
 import LinearIndeterminate from '../../ui/LinearIndeterminate';
+import KeyPhrases from '../../ui/KeyPhrases';
 import './TranslationContainer.css';
 
 const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
@@ -90,10 +91,11 @@ const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
         <section className="translationContainer">
             <textarea className="translationBox" value={textTranslated} readOnly />
             {isLoadingTranslation && <LinearIndeterminate sx={{ color: 'var(--primary-100)' }} />}
-            {keyPhrases &&
-                keyPhrases.map(({ Text, BeginOffset }) => {
-                    return <div key={BeginOffset}>{Text}</div>;
-                })}
+            <KeyPhrases
+                keyPhrases={keyPhrases}
+                hasTextTranslated={textTranslated !== ''}
+                keyPhrasesButtonHandler={getKeyPhrases}
+            />
         </section>
     );
 };
