@@ -7,7 +7,7 @@ El problema
 La Cruz Roja trabaja con colectivos desfavorecidos y vulnerables a través de programas y servicios de ayuda humanitaria, asistencia social, salud y educación para mejorar su calidad de vida y promover la inclusión social.
 Los procesos de acogida y valoración, que se realizan como primer contacto entre Cruz Roja y un usuario a través de una entrevista con formularios específicos puede tomar demasiado tiempo, lo que resulta en una desconexión visual con el usuario y puede crear un primer contacto frío. Este problema puede afectar negativamente la experiencia del usuario y reducir su participación en los programas y servicios de la ONG.
 
-
+![cruz-roja-logo](https://github.com/ada-lovelace-23/note-g/assets/23190882/d37605f3-c837-4740-8f38-1a51fd3477f9)
 
 
 ## Create the resources
