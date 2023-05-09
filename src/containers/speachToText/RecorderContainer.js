@@ -141,6 +141,7 @@ const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
             <option value="it-IT"> Italina </option>
             <option value="fr-FR"> Frances </option>
             <option value="zh-CN"> Chino </option>
+            <option value="ar-AE"> Arabe </option>
           </select>
             <Microphone micClickhandler={micClickhandler} isRecording={recording} />
         </>
