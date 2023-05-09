@@ -12,7 +12,7 @@ const TranslationContainer = ({
     targetLanguage,
     loading,
 }) => {
-    const [textTranslated, setTextTranslated] = useState(null);
+    const [textTranslated, setTextTranslated] = useState('');
     const [keyPhrases, setKeyPhrases] = useState(null);
     const translationSwitch = useRef('');
 
@@ -94,7 +94,7 @@ console.log(keyPhrases, "te")
                 <>
                     <textarea className="translationBox" value={textTranslated} readOnly />
                     {
-                        textTranslated && <button onClick={getKeyPhrases}> Get Key Phrases </button> 
+                        textTranslated != '' && <button onClick={getKeyPhrases}> Get Key Phrases </button> 
                     
                     }
                     {
