@@ -64,7 +64,7 @@ const LanguageSelector = ({ id, label, size, languageHandler }) => {
 
 const availableLanguages = [
     { label: 'English', code: 'en-US' },
-    { label: 'Spanish', code: 'es-ES' },
+    { label: 'Spanish', code: 'es-US' },
     { label: 'Italian', code: 'it-IT' },
     { label: 'French', code: 'fr-FR' },
     { label: 'Chinese', code: 'zh-CN' },

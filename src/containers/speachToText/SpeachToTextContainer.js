@@ -8,7 +8,7 @@ const SpeachToTextContainer = () => {
     const [textTranslated, setTextTranslated] = useState('');
     const [loading, setLoading] = useState(false);
     const textTranscribe = useRef('');
-    const [volunteerLanguage, setVolunteerLanguage] = useState('es-ES');
+    const [volunteerLanguage, setVolunteerLanguage] = useState('es-US');
     const [userLanguage, setUserLanguage] = useState('en-US');
 
     const textToTranslatehandler = (data) => {
