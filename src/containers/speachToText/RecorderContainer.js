@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef } from 'react';
 import Microphone from '../../ui/MicInput';
 import {
     TranscribeStreamingClient,
@@ -9,38 +9,46 @@ import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-id
 import MicrophoneStream from 'microphone-stream';
 import { Buffer } from 'buffer';
 import getUserMedia from 'get-user-media-promise';
+import LanguageSelector from '../../ui/LanguageSelector';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
-const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
-  const [recording, setRecording] = useState(false);
-  const [languagSource, setLanguagSource] = useState("en-US");
-  const SAMPLE_RATE = 44100;
-  let microphoneStream = useRef(null);
-  let transcribeClient = undefined;
+const RecorderContainer = ({ volunteer, user, textToTranslatehandler, loadingHandler }) => {
+    const [recording, setRecording] = useState(false);
+    // const [userLanguage, setUserLanguageSource] = useState('en-US');
+    const { language: userLanguage, languageHandler: userLanguageHandler } = user;
+    const { languageHandler: volunteerLanguageHandler } = volunteer;
+    const SAMPLE_RATE = 44100;
+    let microphoneStream = useRef(null);
+    let transcribeClient = undefined;
 
-  const startRecording = async (language, callback) => {
-      if (!language) {
-        return false;
-      }
-      if (microphoneStream.current || transcribeClient) {
-        stopRecording();
-      }
-      createTranscribeClient();
-      createMicrophoneStream();
-      await startStreaming(language, callback);
-  };
+    const startRecording = async (userLanguage, callback) => {
+        if (!userLanguage) {
+            return false;
+        }
+        if (microphoneStream.current || transcribeClient) {
+            stopRecording();
+        }
+        createTranscribeClient();
+        createMicrophoneStream();
+        try {
+            await startStreaming(userLanguage, callback);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
-  const stopRecording = function () {
-    if (microphoneStream.current) {
-      microphoneStream.current.stop();
-      microphoneStream.current.destroy();
-      microphoneStream.current = undefined;
-      setRecording(false);
-    }
-    if (transcribeClient) {
-      transcribeClient.destroy();
-      transcribeClient = undefined;
-    }
-  };
+    const stopRecording = function () {
+        if (microphoneStream.current) {
+            microphoneStream.current.stop();
+            microphoneStream.current.destroy();
+            microphoneStream.current = undefined;
+            setRecording(false);
+        }
+        if (transcribeClient) {
+            transcribeClient.destroy();
+            transcribeClient = undefined;
+        }
+    };
 
     const createTranscribeClient = () => {
         transcribeClient = new TranscribeStreamingClient({
@@ -52,23 +60,24 @@ const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
         });
     };
 
-  const createMicrophoneStream = async () => {
-    microphoneStream.current = new MicrophoneStream();
-    getUserMedia({
-      video: false,
-      audio: true,
-    })
-    .then(function(stream) {
-      microphoneStream.current.setStream(stream);
-    }).catch(function(error) {
-    });
-  }
+    const createMicrophoneStream = async () => {
+        microphoneStream.current = new MicrophoneStream();
+        try {
+            const stream = await getUserMedia({
+                video: false,
+                audio: true,
+            });
+            microphoneStream.current.setStream(stream);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
-    const startStreaming = async (language, callback) => {
+    const startStreaming = async (userLanguage, callback) => {
         setRecording(true);
-        console.log(language)
+        console.log(userLanguage);
         const command = new StartStreamTranscriptionCommand({
-            LanguageCode: language,
+            LanguageCode: userLanguage,
             MediaEncoding: 'pcm',
             MediaSampleRateHertz: SAMPLE_RATE,
             AudioStream: getAudioStream(),
@@ -79,7 +88,7 @@ const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
                 if (result.IsPartial === false) {
                     const noOfResults = result.Alternatives[0].Items.length;
                     for (let i = 0; i < noOfResults; i++) {
-                        loadingHandler(false)
+                        loadingHandler(false);
                         callback(result.Alternatives[0].Items[i].Content + ' ');
                     }
                 }
@@ -87,17 +96,17 @@ const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
         }
     };
 
-  const getAudioStream = async function* () {
-    for await (const chunk of microphoneStream.current) {
-      if (chunk.length <= SAMPLE_RATE) {
-        yield {
-          AudioEvent: {
-            AudioChunk: encodePCMChunk(chunk),
-          },
-        };
-      }
-    }
-  };
+    const getAudioStream = async function* () {
+        for await (const chunk of microphoneStream.current) {
+            if (chunk.length <= SAMPLE_RATE) {
+                yield {
+                    AudioEvent: {
+                        AudioChunk: encodePCMChunk(chunk),
+                    },
+                };
+            }
+        }
+    };
 
     const encodePCMChunk = (chunk) => {
         const input = MicrophoneStream.toRaw(chunk);
@@ -111,40 +120,47 @@ const RecorderContainer = ({ textToTranslatehandler, loadingHandler }) => {
         return Buffer.from(buffer);
     };
 
-  const micClickhandler = async () => {
-    if(recording === true){
-      stopRecording();
-    }else{
-      try {
-        loadingHandler(true)
-        await startRecording(languagSource, onTranscriptionDataReceived);
-      } catch(error) {
-        loadingHandler(false)
-        alert("An error occurred while recording: " + error.message);
-        stopRecording();
-      }
-    }
-  };
+    const micClickhandler = async () => {
+        if (recording === true) {
+            stopRecording();
+        } else {
+            try {
+                loadingHandler(true);
+                await startRecording(userLanguage, onTranscriptionDataReceived);
+            } catch (error) {
+                loadingHandler(false);
+                alert('An error occurred while recording: ' + error.message);
+                stopRecording();
+            }
+        }
+    };
 
     const onTranscriptionDataReceived = (data) => {
         textToTranslatehandler(data);
     };
 
-    const laguageHandler = (language) => {
-      setLanguagSource(language)
-    }
-
     return (
-        <>
-          <select onChange={(e) => {laguageHandler(e.target.value)}}>
-            <option value="en-US"> Ingles </option>
-            <option value="it-IT"> Italina </option>
-            <option value="fr-FR"> Frances </option>
-            <option value="zh-CN"> Chino </option>
-            <option value="ar-AE"> Arabe </option>
-          </select>
-            <Microphone micClickhandler={micClickhandler} isRecording={recording} />
-        </>
+        <Grid container spacing={1} columns={12}>
+            <Grid xs={6}>
+                <LanguageSelector
+                    size="small"
+                    label="User"
+                    id="user-lang"
+                    languageHandler={userLanguageHandler}
+                />
+            </Grid>
+            <Grid xs={6}>
+                <LanguageSelector
+                    size="small"
+                    label="Volunteer"
+                    id="volunteer-lang"
+                    languageHandler={volunteerLanguageHandler}
+                />
+            </Grid>
+            <Grid xs={12}>
+                <Microphone micClickhandler={micClickhandler} isRecording={recording} />
+            </Grid>
+        </Grid>
     );
 };
 

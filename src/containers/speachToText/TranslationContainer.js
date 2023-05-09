@@ -4,9 +4,14 @@ import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-id
 import { TranslateClient, TranslateTextCommand } from '@aws-sdk/client-translate';
 import { ComprehendClient, DetectDominantLanguageCommand, BatchDetectKeyPhrasesCommand } from '@aws-sdk/client-comprehend';
 import './TranslationContainer.css';
-import loadingImg from "../../images/loading.gif"
+import loadingImg from '../../images/loading.gif';
 
-const TranslationContainer = ({ textToTranslate, textTranslatedHandler, languageTarget, loading }) => {
+const TranslationContainer = ({
+    textToTranslate,
+    textTranslatedHandler,
+    targetLanguage,
+    loading,
+}) => {
     const [textTranslated, setTextTranslated] = useState(null);
     const [keyPhrases, setKeyPhrases] = useState(null);
     const translationSwitch = useRef('');
@@ -17,7 +22,7 @@ const TranslationContainer = ({ textToTranslate, textTranslatedHandler, language
 
     useEffect(() => {
         if (textToTranslate != '') {
-            translateTextToLanguage(textToTranslate, languageTarget);
+            translateTextToLanguage(textToTranslate, targetLanguage);
         }
     }, [translationSwitch.current]);
 
@@ -83,9 +88,9 @@ const TranslationContainer = ({ textToTranslate, textTranslatedHandler, language
 console.log(keyPhrases, "te")
     return (
         <div className="translationContainer">
-            {loading ?
-                <img className='loadingStyle' src={loadingImg} />
-            :
+            {loading ? (
+                <img className="loadingStyle" src={loadingImg} />
+            ) : (
                 <>
                     <textarea className="translationBox" value={textTranslated} readOnly />
                     {
@@ -102,7 +107,7 @@ console.log(keyPhrases, "te")
                             })
                     }
                 </>
-            }
+            )}
         </div>
     );
 };

@@ -1,42 +1,44 @@
 import React from 'react';
-import './micStyles.css'
-import { BsFillRecordCircleFill } from "react-icons/bs";
-import { IconContext } from "react-icons";
+// import './micStyles.jsx';
+// import { BsFillRecordCircleFill } from "react-icons/bs";
+// import { IconContext } from "react-icons";
 
-const micButtonStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: '16px',
-    background: '#fff'
-};
+import Button from './ButtonStyled';
+import MicIcon from '@mui/icons-material/Mic';
+import MicNoneIcon from '@mui/icons-material/MicNone';
+import MicOffIcon from '@mui/icons-material/MicOff';
 
-const microphoneStyle = {
+const micInputStyle = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
 };
 
-
+function showRightMic(isRecording) {
+    return isRecording ? (
+        <>
+            <MicIcon size="large" />
+            <span className="sr-only">Stop recording</span>
+        </>
+    ) : (
+        <>
+            <MicNoneIcon size="large" />
+            <span className="sr-only">Start recording</span>
+        </>
+    );
+}
 
 const Microphone = ({ micClickhandler, isRecording }) => {
-
-    const iconValues = {
-        className: isRecording ? "recordIcon recordIcon--active" : "recordIcon"
-    }
     return (
-        <div style={microphoneStyle}>
-            <button
+        <div style={micInputStyle}>
+            <Button
+                variant="contained"
                 onClick={micClickhandler}
-                styles={micButtonStyle}
-                className="micInputButton">
-                    <IconContext.Provider value={iconValues}>
-                        <BsFillRecordCircleFill />
-                    </IconContext.Provider>
-            </button>
-            {/* {blobUrl && <audio controls src={blobUrl}></audio>} */}
+                size="large"
+                isRecording={isRecording}>
+                {showRightMic(isRecording)}
+            </Button>
         </div>
     );
 };
