@@ -1,18 +1,25 @@
-.translationBox{
+.translationBox {
     margin: auto;
     width: 100%;
-    height: 400px;
+    min-height: calc(100vh - 250px - 48px);
+    height: calc(100vh - 250px - 48px);
+    max-height: calc(100vh - 250px - 48px);
     border: none;
-    padding-top: 40px;
+    padding: 1rem 0;
     pointer-events: none;
     resize: none;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
-.translationContainer{
+.translationContainer {
+    min-height: calc(100vh - 250px - 16px);
+    height: calc(100vh - 250px - 16px);
+    max-height: calc(100vh - 250px - 16px);
     display: flex;
-    margin: 20px 0 0 0;
+    margin-bottom: 16px;
 }
-.loadingStyle{
-    width: 200px;
-    height: 200px;
+.loadingStyle {
+    width: 250px;
+    height: 250px;
     margin: auto;
 }

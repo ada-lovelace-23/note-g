@@ -7,6 +7,11 @@ const GlobalStyle = createGlobalStyle`
         --secondary: #ED1B2E;
         --secondary-100: #cb1827;
         --white: #fff;
+
+        // Fix error in MUI Grid
+        --Grid-columns: 12;
+        --Grid-rowSpacing: 8px;
+        --Grid-columnSpacing: 8px;
     }
     html,
     body {

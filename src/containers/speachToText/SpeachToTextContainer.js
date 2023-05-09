@@ -1,52 +1,69 @@
-import React, { useState, useRef } from "react";
-import RecorderContainer from "./RecorderContainer";
-import TranslationContainer from './TranslationContainer'
-import "./SpeachContainer.css"
+import React, { useState, useRef } from 'react';
+import RecorderContainer from './RecorderContainer';
+import TranslationContainer from './TranslationContainer';
+import './SpeachContainer.css';
 
 const SpeachToTextContainer = () => {
+    const [textToTranslate, setTextToTranslate] = useState('');
+    const [textTranslated, setTextTranslated] = useState('');
+    const [loading, setLoading] = useState(false);
+    const textTranscribe = useRef('');
+    const [volunteerLanguage, setVolunteerLanguage] = useState('es-ES');
+    const [userLanguage, setUserLanguage] = useState('en-US');
 
-  const [textToTranslate, setTextToTranslate] = useState("");
-  const [textTranslated, setTextTranslated] = useState("");
-  const [loading, setLoading] = useState(false);
-  const textTranscribe = useRef("");
-  
-  const textToTranslatehandler = (data) =>{
-    textTranscribe.current = textTranscribe.current + " " + data
-    updateTranscribeText(textTranscribe.current)
-    console.log(textTranscribe.current, textToTranslate)
-  }
+    const textToTranslatehandler = (data) => {
+        textTranscribe.current = textTranscribe.current + ' ' + data;
+        updateTranscribeText(textTranscribe.current);
+        console.log(textTranscribe.current, textToTranslate);
+    };
 
-  const updateTranscribeText = (text) =>{
-    setTextToTranslate(text)
-  }
+    const updateTranscribeText = (text) => {
+        setTextToTranslate(text);
+    };
 
-  const textTranslatedHandler = (data) => {
-    setTextTranslated(data)
-  }
+    const textTranslatedHandler = (data) => {
+        setTextTranslated(data);
+    };
 
-  const loadingHandler = (config) => {
-    setLoading(config)
-  }
+    const loadingHandler = (config) => {
+        setLoading(config);
+    };
 
+    const volunteerLanguageHandler = (language) => {
+        if (language?.code) {
+            setVolunteerLanguage(language.code);
+        } else {
+            setVolunteerLanguage('en-US');
+        }
+    };
 
-  return (
-      <div className="speachContainer">
-          {/* <textarea 
-            value={textToTranslate} 
-            onChange={(e) => updateTranscribeText(e.target.value)}
-            /> */}
-          <RecorderContainer 
-            textToTranslatehandler={textToTranslatehandler} 
-            loadingHandler={loadingHandler}
+    const userLanguageHandler = (language) => {
+        if (language?.code) {
+            setUserLanguage(language.code);
+        } else {
+            setUserLanguage('en-US');
+        }
+    };
+
+    return (
+        <div className="speachContainer">
+            <TranslationContainer
+                targetLanguage={volunteerLanguage}
+                textToTranslate={textToTranslate}
+                textTranslatedHandler={textTranslatedHandler}
+                loading={loading}
             />
-          <TranslationContainer 
-            textToTranslate={textToTranslate} 
-            languageTarget="es"
-            textTranslatedHandler={textTranslatedHandler} 
-            loading={loading}
+            <RecorderContainer
+                volunteer={{
+                    language: volunteerLanguage,
+                    languageHandler: volunteerLanguageHandler,
+                }}
+                user={{ language: userLanguage, languageHandler: userLanguageHandler }}
+                textToTranslatehandler={textToTranslatehandler}
+                loadingHandler={loadingHandler}
             />
-      </div>
-  );
+        </div>
+    );
 };
 
 export default SpeachToTextContainer;
