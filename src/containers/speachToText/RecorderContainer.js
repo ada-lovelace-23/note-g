@@ -14,7 +14,7 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const RecorderContainer = ({ volunteer, user, textToTranslatehandler, loadingHandler }) => {
+const RecorderContainer = ({ volunteer, user, textToTranslatehandler }) => {
     const [recording, setRecording] = useState(false);
     // const [userLanguage, setUserLanguageSource] = useState('en-US');
     const { language: userLanguage, languageHandler: userLanguageHandler } = user;
@@ -90,7 +90,7 @@ const RecorderContainer = ({ volunteer, user, textToTranslatehandler, loadingHan
                 if (result.IsPartial === false) {
                     const noOfResults = result.Alternatives[0].Items.length;
                     for (let i = 0; i < noOfResults; i++) {
-                        loadingHandler(false);
+                        // loadingHandler(false);
                         callback(result.Alternatives[0].Items[i].Content + ' ');
                     }
                 }
@@ -126,14 +126,14 @@ const RecorderContainer = ({ volunteer, user, textToTranslatehandler, loadingHan
         if (recording === true) {
             stopRecording();
         } else {
+            // loadingHandler(true);
             try {
-                loadingHandler(true);
                 await startRecording(userLanguage, onTranscriptionDataReceived);
             } catch (error) {
-                loadingHandler(false);
                 alert('An error occurred while recording: ' + error.message);
                 stopRecording();
             }
+            // loadingHandler(false);
         }
     };
 

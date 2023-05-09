@@ -5,8 +5,7 @@ import './SpeachContainer.css';
 
 const SpeachToTextContainer = () => {
     const [textToTranslate, setTextToTranslate] = useState('');
-    const [textTranslated, setTextTranslated] = useState('');
-    const [loading, setLoading] = useState(false);
+    // const [textTranslated, setTextTranslated] = useState('');
     const textTranscribe = useRef('');
     const [volunteerLanguage, setVolunteerLanguage] = useState('es-US');
     const [userLanguage, setUserLanguage] = useState('en-US');
@@ -21,13 +20,9 @@ const SpeachToTextContainer = () => {
         setTextToTranslate(text);
     };
 
-    const textTranslatedHandler = (data) => {
-        setTextTranslated(data);
-    };
-
-    const loadingHandler = (config) => {
-        setLoading(config);
-    };
+    // const textTranslatedHandler = (data) => {
+    //     setTextTranslated(data);
+    // };
 
     const volunteerLanguageHandler = (language) => {
         if (language?.code) {
@@ -50,8 +45,7 @@ const SpeachToTextContainer = () => {
             <TranslationContainer
                 targetLanguage={volunteerLanguage}
                 textToTranslate={textToTranslate}
-                textTranslatedHandler={textTranslatedHandler}
-                loading={loading}
+                // textTranslatedHandler={textTranslatedHandler}
             />
             <RecorderContainer
                 volunteer={{
@@ -60,7 +54,6 @@ const SpeachToTextContainer = () => {
                 }}
                 user={{ language: userLanguage, languageHandler: userLanguageHandler }}
                 textToTranslatehandler={textToTranslatehandler}
-                loadingHandler={loadingHandler}
             />
         </div>
     );

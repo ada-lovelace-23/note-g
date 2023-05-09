@@ -3,16 +3,13 @@ import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { TranslateClient, TranslateTextCommand } from '@aws-sdk/client-translate';
 import { ComprehendClient, DetectDominantLanguageCommand } from '@aws-sdk/client-comprehend';
+import LinearIndeterminate from '../../ui/LinearIndeterminate';
 import './TranslationContainer.css';
-// import loadingImg from '../../images/loading.gif';
 
-const TranslationContainer = ({
-    textToTranslate,
-    textTranslatedHandler,
-    targetLanguage,
-    loading,
-}) => {
+const TranslationContainer = ({ textToTranslate, targetLanguage }) => {
     const [textTranslated, setTextTranslated] = useState('');
+    const [isLoadingTranslation, setIsLoadingTranslation] = useState(false);
+
     const translationSwitch = useRef('');
 
     if (textToTranslate !== translationSwitch.current) {
@@ -21,6 +18,7 @@ const TranslationContainer = ({
 
     useEffect(() => {
         if (textToTranslate != '') {
+            setIsLoadingTranslation(true);
             translateTextToLanguage(textToTranslate, targetLanguage);
         }
     }, [translationSwitch.current]);
@@ -55,7 +53,8 @@ const TranslationContainer = ({
         };
         const data = await translateClient.send(new TranslateTextCommand(translateParams));
         setTextTranslated(data.TranslatedText);
-        textTranslatedHandler(data.TranslatedText);
+        setIsLoadingTranslation(false);
+        // textTranslatedHandler(data.TranslatedText);
         return data.TranslatedText;
     };
 
@@ -70,14 +69,10 @@ const TranslationContainer = ({
     };
 
     return (
-        <div className="translationContainer">
+        <section className="translationContainer">
             <textarea className="translationBox" value={textTranslated} readOnly />
-            {/* {loading ? (
-                <img className="loadingStyle" src={loadingImg} />
-            ) : (
-                <textarea className="translationBox" value={textTranslated} readOnly />
-            )} */}
-        </div>
+            {isLoadingTranslation && <LinearIndeterminate sx={{ color: 'var(--primary-100)' }} />}
+        </section>
     );
 };
 
