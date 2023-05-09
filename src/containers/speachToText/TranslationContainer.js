@@ -2,12 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import { TranslateClient, TranslateTextCommand } from '@aws-sdk/client-translate';
-import { ComprehendClient, DetectDominantLanguageCommand } from '@aws-sdk/client-comprehend';
+import { ComprehendClient, DetectDominantLanguageCommand, BatchDetectKeyPhrasesCommand } from '@aws-sdk/client-comprehend';
 import './TranslationContainer.css';
 import loadingImg from "../../images/loading.gif"
 
 const TranslationContainer = ({ textToTranslate, textTranslatedHandler, languageTarget, loading }) => {
-    const [textTranslated, setTextTranslated] = useState('');
+    const [textTranslated, setTextTranslated] = useState(null);
+    const [keyPhrases, setKeyPhrases] = useState(null);
     const translationSwitch = useRef('');
 
     if (textToTranslate !== translationSwitch.current) {
@@ -19,6 +20,22 @@ const TranslationContainer = ({ textToTranslate, textTranslatedHandler, language
             translateTextToLanguage(textToTranslate, languageTarget);
         }
     }, [translationSwitch.current]);
+
+    const getKeyPhrases = async () => {
+        const client = (createComprehendClient());
+        console.log(textToTranslate)
+        const input = { // BatchDetectKeyPhrasesRequest
+            TextList: [ // CustomerInputStringList // required
+                textTranslated,
+            ],
+            LanguageCode: "es"
+          };
+         const command = new BatchDetectKeyPhrasesCommand(input);
+        const response = await client.send(command);
+        console.log(response.ResultList[0].KeyPhrases)
+        setKeyPhrases(response.ResultList[0].KeyPhrases)
+
+    }
 
     const translateTextToLanguage = async (text, targetLanguage) => {
         const sourceLanguage = await detectLanguageOfText(text);
@@ -63,13 +80,28 @@ const TranslationContainer = ({ textToTranslate, textTranslatedHandler, language
             }),
         });
     };
-
+console.log(keyPhrases, "te")
     return (
         <div className="translationContainer">
             {loading ?
                 <img className='loadingStyle' src={loadingImg} />
             :
-                <textarea className="translationBox" value={textTranslated} readOnly />
+                <>
+                    <textarea className="translationBox" value={textTranslated} readOnly />
+                    {
+                        textTranslated && <button onClick={getKeyPhrases}> Get Key Phrases </button> 
+                    
+                    }
+                    {
+                        keyPhrases &&
+                            keyPhrases.map(({Text, BeginOffset}) => {
+                                console.log(Text)
+                                return(
+                                    <div key={BeginOffset}>{Text}</div>
+                                )
+                            })
+                    }
+                </>
             }
         </div>
     );
