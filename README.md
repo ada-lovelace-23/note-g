@@ -153,6 +153,18 @@ note-g es una aplicación que mejora la experiencia del primer proceso de acogid
 
 ## Technical Overview
 
+### AWS Accounts and Organization
+
+Para el correcto manejo de nuestros servicios, hemos decidido crear 2 cuentas y una organización.
+
+- Cuenta principal encargada de la gestión de usuarios y facturación
+	- 1 Usuario con rol Administrador
+	- Cuenta que gestiona los créditos de AWS (Hackaton for goods)
+- Cuenta de desarrollo encargada de gestionar el desarrollo
+ 	- 2 Usuarios con rol administrador para los desarrolladores
+- Organización creada por la cuenta principal. Desde la misma se ha invitado a la cuenta de desarrollo 
+
+
 ### AWS Services
 
 ![AWS note-g diagram](https://github.com/ada-lovelace-23/note-g/assets/23190882/a0f29f29-eae2-4b44-9be2-b2a8e4ca0c8b)
