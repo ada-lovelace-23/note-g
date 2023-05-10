@@ -2,8 +2,7 @@
 
 <img src="https://github.com/ada-lovelace-23/note-g/assets/23190882/0a8e62a8-3396-482a-b2e0-def19cc127b6" width="370"/>
 
-note-g is an application the improves user experience during the initial 
-note-g es una aplicación que mejora la experiencia del primer proceso de acogida a través de una solución innovadora que permite a los entrevistadores prestar atención completa al usuario sin tener que tomar notas en frente de él.
+note-g is an application the improves user experience during the initial interviews between Red Cross volunteers and users. It does so using innovative solution that enables interviewers to give the users their full attention with the need to take notes.
 
 ## Descripción del Proyecto
 
@@ -133,7 +132,7 @@ To run the stack using the AWS CLI:
 
 note-g es una aplicación que mejora la experiencia del primer proceso de acogida a través de una solución innovadora que permite a los entrevistadores prestar atención completa al usuario sin tener que tomar notas en frente de él.
 
-**Pros:**
+###Pros:
 
 - Es sencilla de usar
 - Es escalable y browser-based, con costes muy reducidos de mantenimiento 
@@ -146,7 +145,7 @@ note-g es una aplicación que mejora la experiencia del primer proceso de acogid
 - Garantiza que quede todo registrado, reduciendo así la cantidad de veces que un usuario tiene que volver a contar sus problemas.
 - Y finalmente, para Cruz Roja permite reducir el tiempo que el personal tiene que dedicar a data entry para poder realizar más entrevistas y poder así ayudar a más personas 
 
-**Contras:**
+### Contras:
 
 - no poder atender usuarios con idiomas no soportados (ej. ucraino)
 - necesidad de conexión a internet
@@ -229,15 +228,22 @@ No hemos utilizado la región España ya que los servicios Amplify, Transcribe y
 
 ### Demo live
 
-https://www.note-g.online/
+[https://www.note-g.online/](https://www.note-g.online/)
 
 ## Team Members
 
 <table>
   <tr>
-    <td>![image](https://github.com/ada-lovelace-23/note-g/assets/1313681/1d527be7-2af9-47c5-a6d4-140cd0a1ae21)</td>
-    <td>![image](https://github.com/ada-lovelace-23/note-g/assets/1313681/23b4cc81-c2b7-4fed-a2c3-05a1a4e781f5)</td>
-    <td>![image](https://github.com/ada-lovelace-23/note-g/assets/1313681/4ec8997b-9a17-4f8c-94d1-c1cb7ab67624)</td>
+    <td>
+![Agnese](https://github.com/ada-lovelace-23/note-g/assets/1313681/1d527be7-2af9-47c5-a6d4-140cd0a1ae21)
+</td>
+    <td>
+![Honza](https://github.com/ada-lovelace-23/note-g/assets/1313681/23b4cc81-c2b7-4fed-a2c3-05a1a4e781f5)
+</td>
+    <td>
+![Pedro](https://github.com/ada-lovelace-23/note-g/assets/1313681/b5f54eab-b0f2-45cb-81b9-883797f53ccf)
+
+</td>
   </tr>
   <tr>
     <td>Agnese Miselli<br>agnese.miselli@gmail.com</td>
