@@ -223,9 +223,13 @@ No hemos utilizado la región España ya que los servicios Amplify, Transcribe y
 - Delivering and sharing the translation via email and disabling copy&paste to prevent leaking of the private data (depending on the needs of the organization).
 - Deploy the service to different regions, ie. `eu-south2` when these AWS services become available in the region.
 
-## Demo
+## Demo Video
 
 [//Video Hackathon for Good (Iberia) 2023 - Note-g | Reto Cruz Roja](https://www.youtube.com/watch?v=KcD3vcG1Qms)
+
+### Demo live
+
+https://www.note-g.online/
 
 ## Team Members
 
