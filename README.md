@@ -225,7 +225,7 @@ No hemos utilizado la región España ya que los servicios Amplify, Transcribe y
 
 ## Demo
 
-//video url
+[//Video Hackathon for Good (Iberia) 2023 - Note-g | Reto Cruz Roja](https://www.youtube.com/watch?v=KcD3vcG1Qms)
 
 ## Team Members
 
