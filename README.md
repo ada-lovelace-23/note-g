@@ -12,7 +12,7 @@ Reto: Cruz Roja
 
 <img src="https://github.com/ada-lovelace-23/note-g/assets/23190882/d37605f3-c837-4740-8f38-1a51fd3477f9" width="150"/>
 
-**El problema**
+## The problem
 
 La Cruz Roja trabaja con colectivos desfavorecidos y vulnerables a través de programas y servicios de ayuda humanitaria, asistencia social, salud y educación para mejorar su calidad de vida y promover la inclusión social.
 Los procesos de acogida y valoración, que se realizan como primer contacto entre Cruz Roja y un usuario a través de una entrevista con formularios específicos puede tomar demasiado tiempo, lo que resulta en una desconexión visual con el usuario y puede crear un primer contacto frío. Este problema puede afectar negativamente la experiencia del usuario y reducir su participación en los programas y servicios de la ONG.
@@ -40,8 +40,11 @@ Take the following step to setup the app
 - Install dependencies
 - Set up the continuous integration between Amplify and the repository
 
+### Clone the repository
 
-### Create the resources using Amazon CloudFormation
+Using terminal run `git clone git@github.com:ada-lovelace-23/note-g.git` to create a local copy of the repository.
+
+### Set Up Amazon CloudFormation and Create Identity Pool
 
 To run the stack using the AWS CLI:
 
@@ -108,7 +111,7 @@ To run the stack using the AWS CLI:
 20. Choose **Review Policy**.
 21. Choose **Save Changes**.
 
-## Local Development Environment
+### Local Development Environment
 
 - Install the required version of NodeJS\
 `nvm install`\
@@ -123,6 +126,8 @@ To run the stack using the AWS CLI:
 - Create new web host application with the repository
 - Set up the deployment branch
 - Deploy :)
+
+---
 
 ## Descripción de la Solución
 
